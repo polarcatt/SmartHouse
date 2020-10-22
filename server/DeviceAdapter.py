@@ -1,6 +1,6 @@
 import socket
 import pygatt
-import Command
+import Command 
 
 class DeviceAdapter:
 	def __init__(self):
