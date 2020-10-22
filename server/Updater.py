@@ -7,13 +7,13 @@ class Updater:
 		self.deviceAdapter = DeviceAdapter()
 		self.server = Server()
 
-	def UpdateDevices():
+	def UpdateDevices(self):
 		pass
 
-	def UpdateSocket():
+	def UpdateSocket(self):
 		pass
 
-	def Update():
+	def Update(self):
 		dThread = threading.Thread(target=UpdateDevices, daemon = true)
 		sThread = threading.Thread(target=UpdateSocket, daemon = true)
 		dThread.start()

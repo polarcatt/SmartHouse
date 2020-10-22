@@ -1,6 +1,6 @@
 class RedmondBLESmartDevice():
 	
-	def __init__(mac, token):
+	def __init__(self, mac, token, adapter):
 		self.mac = mac
 		self.token = token
 		self.packageId = 1
@@ -9,14 +9,15 @@ class RedmondBLESmartDevice():
 		self.conState = 0
 		self.address_type = pygatt.BLEAddressType.Random
 		self.pairNum = 255
+		self.adapter = adapter
 
-	def firstConnect(adapter):
-		connect(adapter)
+	def firstConnect(self):
+		connect()
 
-	def check():
+	def check(self):
 		pass
 
-	def sendCommand(command, adapter):
+	def sendCommand(self, command):
 		commandNum = 0
 		if command == "turnOn":
 			commandNum = 3
@@ -31,15 +32,15 @@ class RedmondBLESmartDevice():
 		self.device.char_write(writeUuid, byteCommand)
 		disconnect()
 
-	def getCommandBytes(commandNum, data = b''):
+	def getCommandBytes(self, commandNum, data = b''):
 		conStart = b'U'
 		conEnd = b'\xaa'
 		return conStart + bytes([packageId]) + bytes([commandNum]) + data + conEnd
 
-	def connect(adapter):
+	def connect(self):
 		conState = 1
 		try:
-			self.device = adapter.connect(mac, 
+			self.device = self.adapter.connect(mac, 
 				address_type=self.address_type)
 		except Exception:
 			print("E: NoDeviceFound")
