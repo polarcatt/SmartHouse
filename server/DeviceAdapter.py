@@ -1,5 +1,6 @@
 import socket
 import pygatt
+import Command
 
 class DeviceAdapter:
 	def __init__():
@@ -11,8 +12,8 @@ class DeviceAdapter:
 		self.commands = []
 		self.packageNum = 0
 
-	def AddCommand():
-		pass
+	def AddCommand(command, deviceId):
+		commands.append(Command(command, devices[deviceId]))
 
 	def GetNextCommand():
 		pass
