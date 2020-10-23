@@ -31,10 +31,13 @@ class DeviceAdapter:
 		pass
 
 	def ExecuteCommand(self):
-		commands[0].Execute(packageNum, adapter = adapters[commands.GetDevice().getDeviceType()])
-		packageNum = (packageNum % 100) + 1
-		answers[packageNum] = commands[0].getAnswer()
-		PopCommand()
+		if len(commands) != 0:
+			commands[0].Execute(packageNum, adapter = adapters[commands.GetDevice().getDeviceType()])
+			packageNum = (packageNum % 100) + 1
+			answers[packageNum] = commands[0].getAnswer()
+			PopCommand()
+		else:
+			print("NoCommands")
 
 	def GetDevicesInf(self):
 		pass
