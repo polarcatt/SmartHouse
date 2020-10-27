@@ -21,7 +21,7 @@ class DeviceAdapter:
 	def PopCommand(self):
 		pass
 
-	def AddDevice(self):
+	def AddDevice(addr, type):
 		pass
 
 	def RemoveDevice(self):
@@ -31,10 +31,11 @@ class DeviceAdapter:
 		pass
 
 	def ExecuteCommand(self):
-		if len(commands) != 0:
-			commands[0].Execute(packageNum, adapter = adapters[commands.GetDevice().getDeviceType()])
+		command = GetNextCommand()
+		if command:
+			command.Execute(packageNum, adapter = adapters[commands.GetDevice().getDeviceType()])
 			packageNum = (packageNum % 100) + 1
-			answers[packageNum] = commands[0].getAnswer()
+			answers[packageNum] = command.getAnswer()
 			PopCommand()
 		else:
 			print("NoCommands")
