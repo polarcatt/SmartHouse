@@ -8,10 +8,19 @@ class Updater:
 		self.server = Server()
 
 	def UpdateDevices(self):
-		pass
+		ExecuteCommand()
+		getStates()
 
 	def UpdateSocket(self):
-		pass
+		server.GetRecievedData()
+		for i in server.data:
+			getCommand()
+			deviceAdapter.AddCommand()
+		for j in deviceAdapter.answers:
+			server.sendAnswer(j)
+		for client in server.clients:
+			for device in deviceAdapter.devices:
+				server.sendState(client, deviceAdapter.getLastState(device))
 
 	def Update(self):
 		dThread = threading.Thread(target=UpdateDevices, daemon = true)

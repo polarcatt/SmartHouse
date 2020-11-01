@@ -30,6 +30,9 @@ class DeviceAdapter:
 	def CheckDevices(self):
 		pass
 
+	def GetLastState(self, device):
+		pass
+
 	def ExecuteCommand(self):
 		if len(commands) != 0:
 			commands[0].Execute(packageNum, adapter = adapters[commands.GetDevice().getDeviceType()])
