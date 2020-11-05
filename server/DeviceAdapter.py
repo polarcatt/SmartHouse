@@ -30,6 +30,9 @@ class DeviceAdapter:
 	def CheckDevices(self):
 		pass
 
+	def GetLastState(self, device):
+		pass
+
 	def ExecuteCommand(self):
 		command = GetNextCommand()
 		if command:

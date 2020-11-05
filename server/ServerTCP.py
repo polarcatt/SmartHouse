@@ -2,10 +2,13 @@ import socket
 
 class Server:
     def __init__():
+    	pass
 
-    def Send():
+    def SendAnswer():
+    	pass
     
     def GetRecievedData():
+    	pass
 
     def CloseConnection():    
-
+    	pass
