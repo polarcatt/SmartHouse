@@ -9,7 +9,7 @@ class Updater:
 
 	def UpdateDevices(self):
 		ExecuteCommand()
-		getStates()
+		getStates()#in command get state
 
 	def UpdateSocket(self):
 		server.GetRecievedData()
