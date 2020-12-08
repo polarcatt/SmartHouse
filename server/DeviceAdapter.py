@@ -1,13 +1,16 @@
 import socket
 import pygatt
 import Command 
+import RedmondBLESmartDevice
 
 class DeviceAdapter:
 	def __init__(self):
 		self.adapters = {}
-		self.answers = {}
+		self.answers = []
 		self.adapters["BLE"] = pygatt.GATTToolBackend()
-		self.devices = []
+		self.deviceConstruct = {"redmondBle" : ("BLE", RedmondBLESmartDevice)}
+		self.devices = {}
+		self.id = 0
 		loadDevices()
 		self.commands = []
 		self.packageNum = 0
@@ -16,24 +19,23 @@ class DeviceAdapter:
 		commands.append(Command(command, devices[deviceId]))
 
 	def GetNextCommand(self):
-		pass
+		return commands[0]
 
 	def PopCommand(self):
-		pass
+		commands.remove(GetNextCommand())
 
-	def AddDevice(self):
-		pass
+	def AddDevice(self, idd):
+		devices[idd].firstCon()
 
-	def RemoveDevice(self):
+	def RemoveDevice(self, id):
 		pass
 
 	def CheckDevices(self):
 		pass
 
 	def ExecuteCommand(self):
-		commands[0].Execute(packageNum, adapter = adapters[commands.GetDevice().getDeviceType()])
+		answers.append(GetNextCommand().Execute(self, packageNum, adapter = adapters[commands.GetDevice().getDeviceType()]))
 		packageNum = (packageNum % 100) + 1
-		answers[packageNum] = commands[0].getAnswer()
 		PopCommand()
 
 	def GetDevicesInf(self):

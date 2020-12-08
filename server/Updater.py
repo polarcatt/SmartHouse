@@ -1,21 +1,23 @@
 import Server
-import DeviceAdapter
+#import DeviceAdapter
+import threading
 
 class Updater:
 
-	def __init__(self):
-		self.deviceAdapter = DeviceAdapter()
-		self.server = Server()
+	def __init__(self, server):
+		#self.deviceAdapter = DeviceAdapter()
+		self.server = server
 
 	def UpdateDevices(self):
 		pass
 
 	def UpdateSocket(self):
-		pass
+		to = self.server.getData()
+		#self.server.toAnswer(to)
+		self.server.logfile.flush()
+		#print(to)
 
 	def Update(self):
-		dThread = threading.Thread(target=UpdateDevices, daemon = true)
-		sThread = threading.Thread(target=UpdateSocket, daemon = true)
-		dThread.start()
-		sThread.start()
+		self.UpdateSocket()
+		self.UpdateDevices()
 

@@ -1,11 +1,24 @@
 class Command():
 
-	def __init__(self, command, device):
+	def __init__(self, command = "", device = "1"):
 		self.command = command
-		self.device = device
+		self.id = device
+		self.name = ""
 
 	def GetDevice(self):
 		return self.device
 
 	def Execute(self):
-		device.sendCommand(command)
+		if self.command == 'Add':
+			self.device.firstConnect()
+			self.device.getAns(self.manageAns)
+		elif self.command == 'Delete':
+			self.device.con = 0
+		else:
+			self.device.sendCommand(command)
+
+	def manageAns(self):
+		pass
+
+	def __str__(self):
+		return str(self.__dict__)

@@ -1,15 +1,20 @@
 class RedmondBLESmartDevice():
-	
-	def __init__(self, mac, token, adapter):
+
+	def __init__(self, idd, mac, token, adapter):
+		self.id = idd
 		self.mac = mac
 		self.token = token
 		self.packageId = 1
 		self.writeUuid = ""
 		self.readUuid = ""
-		self.conState = 0
+		self.state = ["notcon", "off"]
 		self.address_type = pygatt.BLEAddressType.Random
 		self.pairNum = 255
 		self.adapter = adapter
+		self.commands = {}
+		commands["turnOn"] = 3
+		commands["turnOff"] = 4
+		commands["getInf"] = 4
 
 	def firstConnect(self):
 		connect()
@@ -18,13 +23,7 @@ class RedmondBLESmartDevice():
 		pass
 
 	def sendCommand(self, command):
-		commandNum = 0
-		if command == "turnOn":
-			commandNum = 3
-		elif command == "turnOff":
-			commandNum = 4
-		else:
-			raise NotImplemetedExpetion
+		commandNum = commands[command]
 		connect()
 		if(device)
 		conState = 2
