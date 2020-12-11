@@ -8,7 +8,11 @@ class Command():
 	def GetDevice(self):
 		return self.device
 
-	def Execute(self):
+	def Execute(self, dAdapter, packageNum):
+		self.dAdapter = dAdapter
+		self.dAdapter.waiting = True
+		print("GO")
+		'''
 		if self.command == 'Add':
 			self.device.firstConnect()
 			self.device.getAns(self.manageAns)
@@ -16,8 +20,10 @@ class Command():
 			self.device.con = 0
 		else:
 			self.device.sendCommand(command)
+		'''
 
 	def manageAns(self):
+		self.dAdapter.waiting = False
 		pass
 
 	def __str__(self):

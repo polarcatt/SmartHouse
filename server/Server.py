@@ -4,7 +4,7 @@ import Command
 import json
 
 class Server:
-    def __init__(self, port, logfile, code, timeout):
+    def __init__(self, port, code, timeout, logfile):
         self.port = port
         self.sock = socket.socket()
         self.sock.bind(('0.0.0.0', port))
@@ -37,7 +37,6 @@ class Server:
                     while strData.count('{') != strData.count('}'):
                         data = r.recv(1024)
                         strData += data.decode()
-                    print("Got : ", strData)
                     if data:
                         balanceO = 0
                         balanceC = 0
@@ -61,7 +60,7 @@ class Server:
                                     self.loggedIn.append(r)
                                 self.logfile.write("Client logged: " + str(self.addresses[r]) + "\n")
                             elif com.id == "-2" or com.id == "-3":
-                                pass
+                                self.logfile.write("Client not logged: " + str(self.addresses[r]) + "\n")
                             else:
                                 if r in self.loggedIn:
                                     self.logfile.write("Command passes: " + str(self.addresses[r]) + " "+ com.id + "\n")

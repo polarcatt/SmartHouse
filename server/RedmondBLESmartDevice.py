@@ -23,13 +23,16 @@ class RedmondBLESmartDevice():
 		pass
 
 	def sendCommand(self, command):
+		pass
+		'''
 		commandNum = commands[command]
 		connect()
-		if(device)
+		if device
 		conState = 2
 		byteCommand = getCommandBytes(commandNum)
 		self.device.char_write(writeUuid, byteCommand)
 		disconnect()
+		'''
 
 	def getCommandBytes(self, commandNum, data = b''):
 		conStart = b'U'
