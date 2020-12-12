@@ -13,35 +13,39 @@ import java.util.TimerTask;
 import test.Client.Connection;
 
 class Client {
-	
-	public static class Connection {
-        private Socket mSocket = null;
-        private String mHost = null;
-        private int mPort = 0;
-        //private EditText textView2 = null;
+    
+    private static OutputStream output;
+    private static InputStream input;
+    private static DataOutputStream dos;
+    private static DataInputStream dstream;
+    private static Connection mConnect;
+    private static int PORT = 11815;
+    private static Socket mSocket = null;
 
-        public static final String LOG_TAG = "SOCKET";
-
-        public Connection(final String host, final int port) {
-            this.mHost = host;
-            this.mPort = port;
-        }
-
-        public void openConnection() throws Exception {
-            try {
-                mSocket = new Socket(mHost, mPort);
-                output = mSocket.getOutputStream();
-                input = mSocket.getInputStream();
-                dos = new DataOutputStream(output);
-                dstream = new DataInputStream(input);
-            } catch (IOException e) {
-                throw new Exception("Невозможно создать сокет: "
-                        + e.getMessage());
+    public void Connect(String ip) {
+        
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    mSocket = new Socket(ip, PORT);
+                    output = mSocket.getOutputStream();
+                    input = mSocket.getInputStream();
+                    dos = new DataOutputStream(output);
+                    dstream = new DataInputStream(input);
+                    //Log.i(LOG_TAG, "Соединение установлено");
+                    //Log.i(LOG_TAG, "(mConnect != null) = "
+                          //  + (mConnect != null));
+                    dos.writeBytes("Hello");
+                } catch (Exception e) {
+                    //Log.i(LOG_TAG, e.getMessage());
+                }
             }
-        }
-
-        public void closeConnection() {
-            if (mSocket != null && !mSocket.isClosed()) {
+        }).start();
+    }
+    
+    public static void Close() {
+        if (mSocket != null && !mSocket.isClosed()) {
                 try {
                     mSocket.close();
                     dos.close();
@@ -56,62 +60,43 @@ class Client {
                 }
             }
             mSocket = null;
-        }
+    } 
 
-        protected void finalize() throws Throwable {
-            super.finalize();
-            closeConnection();
-        }
-	}
-	
-	private static OutputStream output;
-    private static InputStream input;
-    private static DataOutputStream dos;
-    private static DataInputStream dstream;
-	private static Connection mConnect;
-    private static  int PORT = 11815;
-    
-	public void Connect(String ip) {
-		
-        mConnect = new Connection(ip, PORT);
-        
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    mConnect.openConnection();
-                    //Log.i(LOG_TAG, "Соединение установлено");
-                    //Log.i(LOG_TAG, "(mConnect != null) = "
-                          //  + (mConnect != null));
-                    dos.writeBytes("Hello");
-                } catch (Exception e) {
-                    //Log.i(LOG_TAG, e.getMessage());
-                    mConnect = null;
-                }
+    public static boolean CheckPass(String pass) {
+        dos.writeBytes(pass);
+
+        if(dstream != null && dstream.available() > 0) {
+            Log.i(LOG_TAG, "ЖДЕМ");
+
+            byte[] messageByte = new byte[1000];
+            String dataString = "";
+            int bytesRead;
+
+            while((bytesRead = dstream.read(messageByte)) > 0) 
+            {
+                dataString += new String(messageByte, 0, bytesRead);
             }
-        }).start();
+
+            ParsePacket(dataString);
+        }   
+        else return "";
+    }
+
+    public static ParsePacket(String packet) {
+        
+    }
+/*
     
 
-    	
-	}
-/*
-	public static boolean CheckPass() {
+    public static void SendCommand(device, command) {
 
-	}
+    }
 
-	public static void SendCommand() {
+    public static byte GetPacket() {
 
-	}
+    }
 
-	public static byte GetPacket() {
-
-	}
-
-	public static ParsePacket() {
-
-	}
-
-	public static void Close() {
-
-	} */
+    
+    */
+    
 }
