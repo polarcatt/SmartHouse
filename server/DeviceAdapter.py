@@ -7,7 +7,7 @@ class DeviceAdapter:
 	def __init__(self):
 		self.adapters = {}
 		self.answers = []
-		#self.adapters["BLE"] = pygatt.GATTToolBackend()
+		self.adapters["BLE"] = pygatt.GATTToolBackend()
 		self.deviceConstruct = {"redmondBle" : ("BLE", RedmondBLESmartDevice)}
 		self.devices = {}
 		self.waiting = False

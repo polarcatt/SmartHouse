@@ -58,9 +58,11 @@ class Server:
                                    self.notloggedIn.remove(r)
                                 if r not in self.loggedIn:
                                     self.loggedIn.append(r)
+                                self.toAnswer(r, "{'pass':'Success'}")
                                 self.logfile.write("Client logged: " + str(self.addresses[r]) + "\n")
-                            elif com.id == "-2" or com.id == "-3":
+                            elif com.id == "-2":
                                 self.logfile.write("Client not logged: " + str(self.addresses[r]) + "\n")
+                                self.toAnswer(r, "{'pass':'Failure'}")
                             else:
                                 if r in self.loggedIn:
                                     self.logfile.write("Command passes: " + str(self.addresses[r]) + " "+ com.id + "\n")
@@ -94,16 +96,13 @@ class Server:
             self.notloggedIn.remove(r)
         r.close()
 
-    def toAnswer(self, data):
-        for command in data:
-            client = command[0]
-            d = command[1]
-            print(client, data)
+    def toAnswer(self, client, data):
+        for mes in data:
             if client in self.queue.keys():
-                self.queue[client].append(d)
+                self.queue[client].append(mes)
             else:
                 self.wlist.append(client)
-                self.queue[client] = [d]
+                self.queue[client] = [mes]
 
     def getCommand(self, client, data):
         com = Command.Command()

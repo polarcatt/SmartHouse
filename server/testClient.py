@@ -1,6 +1,6 @@
 import socket
 import time
-HOST = 'localhost'
+HOST = '192.168'
 PORT = 11843
 try:
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
